@@ -9,6 +9,7 @@ from .views import (
     UsuarioViewSet,
     RegistroUsuarioView,
     CurrentUserView, 
+    NotificacionViewSet
 )
 
 # Crea un router para registrar tus ViewSets
@@ -17,6 +18,7 @@ router.register(r'proyectos', ProyectoViewSet, basename='proyectos')
 router.register(r'tareas', TareaViewSet, basename='tareas')
 router.register(r'comentarios', ComentarioViewSet, basename='comentarios')
 router.register(r'usuarios', UsuarioViewSet, basename='usuarios')
+router.register(r'notificaciones', NotificacionViewSet, basename='notificaciones')
 
 urlpatterns = [
     # Incluye todas las URLs generadas por el router    

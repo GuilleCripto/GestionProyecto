@@ -5,6 +5,7 @@ import storage from 'redux-persist/lib/storage'
 import userReducer from './slices/user'
 import projectsReducer from './slices/projects';
 import tasksReducer from './slices/tasks';
+import notificationsReducer from './slices/notificaciones';
 
 // ----------------------------------------------------------------------
 
@@ -18,7 +19,8 @@ const rootPersistConfig = {
 const rootReducer = combineReducers({
   user: userReducer,
   projects: projectsReducer,
-  tasks: tasksReducer
+  tasks: tasksReducer,
+  notifications: notificationsReducer
 })
 
 export { rootPersistConfig, rootReducer }

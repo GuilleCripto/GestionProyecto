@@ -51,6 +51,11 @@ const TareaList = Loadable(lazy(() => import('../pages/dashboard/tareas/TareaLis
 const TareaCreatePage = Loadable(lazy(() => import('../pages/dashboard/tareas/TareaCreatePage')))
 const TareaEditPage = Loadable(lazy(() => import('../pages/dashboard/tareas/TareaEditPage')))
 
+
+const NotificacionList = Loadable(lazy(() => import('../pages/dashboard/notificaciones/NotificacionList')))
+const NotificacionCreatePage = Loadable(lazy(() => import('../pages/dashboard/notificaciones/NotificacionCreatePage')))
+const NotificacionEditPage = Loadable(lazy(() => import('../pages/dashboard/notificaciones/NotificacionEditPage')))
+
 const Page500 = Loadable(lazy(() => import('../pages/Page500')))
 const Page403 = Loadable(lazy(() => import('../pages/Page403')))
 const Page404 = Loadable(lazy(() => import('../pages/Page404')))
@@ -97,32 +102,34 @@ export default function Router() {
         { element: <Navigate to={PATH_AFTER_LOGIN} replace />, index: true },
         { path: 'app', element: <GeneralApp /> },
         { path: 'hola', element: <HolaPage /> },
-        { path: 'proyectos',
-                children: [
-                  { 
-                    path: '',
-                    element: <ProyectoList /> 
-                  },
-                  {
-                    path: 'new',
-                    element: <ProyectoCreatePage /> // <-- La ruta para crear un proyecto
-                  },
-                  {
-                    path: 'edit/:id',
-                    element: <ProyectoEditPage /> // <-- La ruta para editar un proyecto
-                  },
-                  {
-                    path: 'view/:id',
-                    element: <ProyectoEditPage /> // <-- La ruta para editar un proyecto
-                  },
-                 ]
+        {
+          path: 'proyectos',
+          children: [
+            {
+              path: '',
+              element: <ProyectoList />
+            },
+            {
+              path: 'new',
+              element: <ProyectoCreatePage /> // <-- La ruta para crear un proyecto
+            },
+            {
+              path: 'edit/:id',
+              element: <ProyectoEditPage /> // <-- La ruta para editar un proyecto
+            },
+            {
+              path: 'view/:id',
+              element: <ProyectoEditPage /> // <-- La ruta para editar un proyecto
+            },
+          ]
         }, // <-- AÑADIDO
 
-          { path: 'tareas',
+        {
+          path: 'tareas',
           children: [
-            { 
+            {
               path: '',
-              element: <TareaList /> 
+              element: <TareaList />
             },
             {
               path: 'new',
@@ -136,8 +143,29 @@ export default function Router() {
               path: 'view/:id',
               element: <TareaEditPage /> // <-- La ruta para editar un proyecto
             },
-           ]
-  }, // <-- AÑADIDO
+          ]
+        }, 
+        {
+          path: 'notificaciones',
+          children: [
+            {
+              path: '',
+              element: <NotificacionList />
+            },
+            {
+              path: 'new',
+              element: <NotificacionCreatePage /> // <-- La ruta para crear un proyecto
+            },
+            {
+              path: 'edit/:id',
+              element: <NotificacionEditPage /> // <-- La ruta para editar un proyecto
+            },
+            {
+              path: 'view/:id',
+              element: <NotificacionEditPage /> // <-- La ruta para editar un proyecto
+            },
+          ]
+        }, // <-- AÑADIDO// <-- AÑADIDO
         {
           path: 'user',
           children: [

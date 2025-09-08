@@ -41,12 +41,12 @@ const navConfig = [
       {
         title: 'Tareas',
         path: PATH_DASHBOARD.tareas.root,
-        icon: ICONS.kanban,
+        icon: ICONS.banking,
       },
       {
         title: 'Notificaciones',
-        path: PATH_DASHBOARD.proyectos.root,
-        icon: ICONS.kanban,
+        path: PATH_DASHBOARD.notificaciones.root,
+        icon: ICONS.blog,
       }
     ]
   }

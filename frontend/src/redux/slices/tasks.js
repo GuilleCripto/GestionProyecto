@@ -89,7 +89,7 @@ export function getTasks(taskId) {
 
 // Nueva acción para crear tareas
 export function createTask(formData) {
-  const idProyecto = formData.proyecto;
+  const idProyecto = formData.proyecto_id;
   return async (dispatch) => {
     dispatch(actions.startLoading());
     try {
@@ -167,7 +167,7 @@ export function deleteTasks(taskId) {
       };
 
       // Haz la llamada DELETE a la API
-      await axios.delete(`/tareas/${taskId}/`, config);
+      await axios.delete(`/api/v1/tareas/${taskId}/`, config);
       dispatch(actions.deleteTasksSuccess(taskId));
     } catch (error) {
       dispatch(actions.hasError(error.message));

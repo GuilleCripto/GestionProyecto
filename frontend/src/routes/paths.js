@@ -30,7 +30,7 @@ export const PATH_DASHBOARD = {
   root: ROOTS_DASHBOARD,
   general: {
     app: path(ROOTS_DASHBOARD, '/app')
-  }, 
+  },
 
   permissionDenied: path(ROOTS_DASHBOARD, '/permission-denied'),
   user: {
@@ -41,13 +41,13 @@ export const PATH_DASHBOARD = {
   },
 
   hola: {
-    root: path(ROOTS_DASHBOARD, '/hola'), 
+    root: path(ROOTS_DASHBOARD, '/hola'),
   },
   proyectos: {
-     root: path(ROOTS_DASHBOARD, '/proyectos'),
-     new: '/dashboard/proyectos/new',
-     edit: (id) => `/dashboard/proyectos/edit/${id}`,
-     view: (id) => `/dashboard/proyectos/view/${id}`,
+    root: path(ROOTS_DASHBOARD, '/proyectos'),
+    new: '/dashboard/proyectos/new',
+    edit: (id) => `/dashboard/proyectos/edit/${id}`,
+    view: (id) => `/dashboard/proyectos/view/${id}`,
   },
 
   tareas: {
@@ -55,8 +55,14 @@ export const PATH_DASHBOARD = {
     new: '/dashboard/tareas/new',
     edit: (id) => `/dashboard/tareas/edit/${id}`,
     view: (id) => `/dashboard/tareas/view/${id}`,
- }
-  
+  },
+  notificaciones: {
+      root: path(ROOTS_DASHBOARD, '/notificaciones'),
+      new: '/dashboard/notificaciones/new',
+      edit: (id) => `/dashboard/notificaciones/edit/${id}`,
+      view: (id) => `/dashboard/notificaciones/view/${id}`,
+    }
+
 }
 
 export const PATH_DOCS = ''

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Usuario, Proyecto, Tarea, Comentario
+from .models import Usuario, Proyecto, Tarea, Comentario, Notificacion
 
 # Serializadores para la autenticación y usuarios
 
@@ -57,13 +57,29 @@ class ProyectoSerializer(serializers.ModelSerializer):
 # Serializadores para tareas
 
 class TareaSerializer(serializers.ModelSerializer):
-    asignado_a_nombre = serializers.CharField(source='asignado_a.username', read_only=True)
-    proyecto_nombre = serializers.CharField(source='proyecto.nombre', read_only=True)
+    # Esto es para mostrar el proyecto completo en las solicitudes GET
+    proyecto = ProyectoSerializer(read_only=True)
+
+    # Esto es para recibir el ID del proyecto en las solicitudes POST/PATCH
+    # La opción 'source' le dice al serializador que guarde este ID en el campo 'proyecto' del modelo
+    proyecto_id = serializers.PrimaryKeyRelatedField(
+        queryset=Proyecto.objects.all(), 
+        source='proyecto',
+        write_only=True # Solo para escribir datos, no para mostrarlos
+    )
 
     class Meta:
         model = Tarea
-        fields = ['id', 'nombre', 'descripcion', 'estado', 'fecha_vencimiento', 'proyecto', 'proyecto_nombre', 'asignado_a', 'asignado_a_nombre']
-        read_only_fields = ['proyecto']
+        fields = [
+            'id', 
+            'nombre', 
+            'descripcion', 
+            'estado', 
+            'fecha_vencimiento', 
+            'proyecto', 
+            'proyecto_id',
+            'asignado_a'
+        ]
 
 # Serializadores para comentarios
 
@@ -74,3 +90,9 @@ class ComentarioSerializer(serializers.ModelSerializer):
         model = Comentario
         fields = ['id', 'contenido', 'fecha_creacion', 'tarea', 'autor', 'autor_nombre']
         read_only_fields = ['tarea', 'autor']
+
+
+class NotificacionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notificacion
+        fields = ['id', 'mensaje', 'leida', 'fecha_creacion']
