@@ -3,6 +3,9 @@
 <summary>Introducción</summary>
 <br>
     Desarrollar una aplicación web fullstack utilizando Django para el backend y React o algún otro framework para el frontend. La aplicación debe ser desplegada en un repositorio de GitHub y, opcionalmente, desplegada en un servidor gratuito.
+    Montado en el servidor http://45.166.16.10:3000/
+    usuario ===> admin@demo.com
+    clave = 123456
 </details>
 
 <details>
@@ -11,7 +14,8 @@
          
 
 
-![Getting Started](./captura_proyectos.png.png)
+![Getting Proyectos](./captura_proyectos1.png)
+![Getting Started](./captura_proyectos1.png)
 
 </details>
 
