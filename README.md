@@ -18,12 +18,11 @@
 <details>
 
 <summary>Instalacion Backend</summary>
-         Proyecto montado con Spring Boot y Java 8, con los siguientes frameworks / libraries / funcionalidades:
+        - Proyecto montado con Python y react , con los siguientes frameworks / libraries / funcionalidades:
 
+        - Servicio completo RESTful con Django 
 
- - Servicio completo RESTful con Django 
-
- - Capa de base de datos Postgres
+        - Capa de base de datos Postgres
 </details>
 
 <details>
