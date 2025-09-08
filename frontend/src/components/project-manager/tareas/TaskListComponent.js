@@ -79,6 +79,10 @@ const TaskListComponent = ({ tasks }) => {
 
   // Funciones de permisos
   const isAdministrador = user && user.rol === 'administrador';
+  const isColaborador = user && user.rol === 'colaborador';
+  const isVisor = user && user.rol === 'visor';
+
+  
   const canModify = (task) => {
     // Si la tarea está asignada al usuario actual, puede modificarla
     return isAdministrador || (task && task.asignado_a?.id === user.id);
@@ -94,6 +98,8 @@ const TaskListComponent = ({ tasks }) => {
     );
   }
   
+
+
   return (
     <Box sx={{ p: 3 }}>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 3 }}>
@@ -135,7 +141,7 @@ const TaskListComponent = ({ tasks }) => {
                 <TableCell>{task.estado}</TableCell>
                 <TableCell>{task.fecha_vencimiento}</TableCell>
                 {/* Asumimos que la tarea tiene una relación a su proyecto con el nombre del proyecto */}
-                <TableCell>{task.proyecto_nombre}</TableCell> 
+                <TableCell>{task.proyecto.nombre || 'Sin proyecto'}</TableCell> 
                 <TableCell>{task.asignado_a?.username || 'Sin asignar'}</TableCell>
                 <TableCell align="right">
                   <IconButton
@@ -177,6 +183,10 @@ const TaskListComponent = ({ tasks }) => {
           </MenuItem>
         )}
       </Menu>
+
+    
+
+
     </Box>
   );
 };

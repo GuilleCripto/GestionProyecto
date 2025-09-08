@@ -37,6 +37,15 @@ const slice = createSlice({
       state.tasks.push(action.payload);
     },
 
+    updateTaskSuccess(state, action) {
+      state.isLoading = false;
+      state.error = null;
+      const updatedTask = action.payload;
+      state.tasks = state.tasks.map((task) =>
+        task.id === updatedTask.id ? updatedTask : task
+      );
+    },
+
     deleteTasksSuccess(state, action) {
       state.isLoading = false;
       state.error = null;
@@ -54,7 +63,7 @@ export default slice.reducer;
 // Acciones asíncronas
 export const { actions } = slice;
 
-export function getTasks(projectId) {
+export function getTasks(taskId) {
   return async (dispatch) => {
     dispatch(actions.startLoading());
     try {
@@ -70,7 +79,7 @@ export function getTasks(projectId) {
       };
 
       // Hacemos la petición a la API de tareas para un proyecto específico
-      const response = await axios.get(`/api/v1/proyectos/${projectId}/tareas/`, config);
+      const response = await axios.get(`/api/v1/tareas/${taskId}`, config);
       dispatch(actions.getTasksSuccess(response.data));
     } catch (error) {
       dispatch(actions.hasError(error.message));
@@ -80,7 +89,7 @@ export function getTasks(projectId) {
 
 // Nueva acción para crear tareas
 export function createTask(formData) {
-  console.log("este es el formdata", formData)
+  const idProyecto = formData.proyecto;
   return async (dispatch) => {
     dispatch(actions.startLoading());
     try {
@@ -96,7 +105,7 @@ export function createTask(formData) {
         },
       };  
 
-      const response = await axios.post('/api/v1/proyectos/5/tareas/', formData, config);
+      const response = await axios.post(`/api/v1/proyectos/${idProyecto}/tareas/`, formData, config);
       dispatch(actions.createTaskSuccess(response.data));
     } catch (error) {
       dispatch(actions.hasError(error.message));
@@ -127,6 +136,20 @@ export function getTasksAll() {
     }
   };
 }
+
+
+export function updateTask(id, formData) {
+  return async (dispatch) => {
+    dispatch(actions.startLoading());
+    try {
+      const response = await axios.put(`/api/v1/tareas/${id}/`, formData);
+      dispatch(actions.updateTaskSuccess(response.data));
+    } catch (error) {
+      dispatch(actions.hasError(error.message));
+    }
+  };
+}
+
 
 export function deleteTasks(taskId) {
   return async (dispatch) => {

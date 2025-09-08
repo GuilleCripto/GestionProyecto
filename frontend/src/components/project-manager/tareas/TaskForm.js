@@ -29,6 +29,7 @@ const TaskSchema = Yup.object().shape({
 const TaskForm = ({ onCancel, onSave, initialData, isReadOnly = false }) => {
   const dispatch = useDispatch();
   const { projects } = useSelector(state => state.projects);
+
   const { control, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(TaskSchema),
     defaultValues: {
@@ -45,23 +46,39 @@ const TaskForm = ({ onCancel, onSave, initialData, isReadOnly = false }) => {
     dispatch(getProjects());
   }, [dispatch]);
 
-  // Rellena el formulario con los datos iniciales
+  // Sincroniza el formulario con los datos iniciales una vez que los proyectos estén cargados
   useEffect(() => {
-    if (initialData) {
+    if (initialData && projects.length > 0) {
+      let projectId;
+      // Verificamos si la propiedad 'proyecto' es un objeto o un número
+      if (typeof initialData.proyecto === 'object' && initialData.proyecto !== null) {
+        projectId = initialData.proyecto.id;
+      } else {
+        projectId = initialData.proyecto;
+      }
+      
       reset({
         ...initialData,
-        proyecto: initialData.proyecto?.id || '' // Asegura que el valor sea el ID
+        proyecto: projectId || ''
       });
     }
-  }, [initialData, reset]);
+  }, [initialData, projects, reset]);
 
   const onSubmit = (data) => {
+    // Extraemos la propiedad 'proyecto' y el resto de los datos
+    const { proyecto, ...restOfData } = data;
+    
+    // Creamos un nuevo objeto de datos con 'proyecto_id'
+    const processedData = {
+      ...restOfData,
+      proyecto_id: parseInt(proyecto, 10),
+    };
+
     if (onSave) {
-      onSave(data);
+      onSave(processedData);
     }
   };
 
-  // Opciones para el campo de estado
   const estados = [
     { value: 'pendiente', label: 'Pendiente' },
     { value: 'en_progreso', label: 'En progreso' },
@@ -122,23 +139,28 @@ const TaskForm = ({ onCancel, onSave, initialData, isReadOnly = false }) => {
           <Controller
             name="proyecto"
             control={control}
-            render={({ field }) => (
-              <TextField 
-                {...field} 
-                select 
-                label="Proyecto" 
-                error={!!errors.proyecto} 
-                helperText={errors.proyecto?.message} 
-                sx={{ flexGrow: 1 }}
-                disabled={isReadOnly}
-              >
-                {projects.map((project) => (
-                  <MenuItem key={project.id} value={project.id}>
-                    {project.nombre}
-                  </MenuItem>
-                ))}
-              </TextField>
-            )}
+            render={({ field }) => {
+              return (
+                <TextField 
+                  select 
+                  label="Proyecto" 
+                  value={field.value}
+                  onChange={field.onChange}
+                  error={!!errors.proyecto} 
+                  helperText={errors.proyecto?.message} 
+                  sx={{ flexGrow: 1 }}
+                  disabled={isReadOnly}
+                >
+                  {projects.map((project) => {
+                    return (
+                        <MenuItem key={project.id} value={project.id}>
+                            {project.nombre}
+                        </MenuItem>
+                    );
+                  })}
+                </TextField>
+              );
+            }}
           />
         </Stack>
 
